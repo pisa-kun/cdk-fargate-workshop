@@ -1,14 +1,34 @@
-# Welcome to your CDK TypeScript project
+# CDKでFargateを構築
 
-This is a blank project for CDK development with TypeScript.
+## イメージ作成からecsへのデプロイまで
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+### ローカルでイメージ作成と動作
+./appフォルダにて
+> npm install
 
-## Useful commands
+> docker build . -t node-web-app
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+> docker run -p 80:80 -d node-web-app
+
+### ECRへDockerイメージをプッシュ
+
+ECRに対してDockerクライアントを認証
+> aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com
+
+ECRリポジトリの作成、リポジトリ名は **sample-node-app**
+
+> aws ecr create-repository --repository-name sample-node-app --image-scanning-configuration scanOnPush=true --region ap-northeast-1
+
+IMAGE IDの確認
+> docker image ls
+
+イメージにECR用のタグを付与
+> docker tag <ImageTagID> <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
+
+イメージのプッシュ
+> docker push <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
+
+## CDKでFargateを構築
+
+### 参考
+https://zenn.dev/hirokisakabe/articles/73d7d30a0e2ec8
