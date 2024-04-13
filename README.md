@@ -39,6 +39,7 @@ Dockerイメージの再ビルド
 > docker push <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
 
 ## CDKでFargateを構築
+lib/cdk-fargate-sample-stack.ts参照
 
 ### 参考
 https://zenn.dev/hirokisakabe/articles/73d7d30a0e2ec8
