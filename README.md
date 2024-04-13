@@ -28,6 +28,16 @@ IMAGE IDの確認
 イメージのプッシュ
 > docker push <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
 
+### dockerイメージを更新する場合
+Dockerイメージの再ビルド
+> docker build -t node-web-app:latest .
+
+タグを再度付与
+> docker tag <ImageTagID> <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
+
+イメージのプッシュ
+> docker push <AWSACCOUNTID>.dkr.ecr.ap-northeast-1.amazonaws.com/sample-node-app:latest
+
 ## CDKでFargateを構築
 
 ### 参考
